@@ -3,8 +3,34 @@ import { Link } from "react-router-dom";
 import Button from "./Button";
 
 export default class TopBar extends Component {
-  state = { loggedIn: false };
   render() {
+    const auth = (
+      <div style={{ float: "right", paddingRight: 20 }}>
+        <Button style={{ backgroundColor: "#f44336", color: "white" }}>
+          HR
+        </Button>
+        <Button
+          onPress={this.props.onLogout}
+          style={{ backgroundColor: "#f44336", color: "white" }}
+        >
+          Logout
+        </Button>
+      </div>
+    );
+    const guest = (
+      <div style={{ float: "right", paddingRight: 20 }}>
+        <Button
+          style={{ backgroundColor: "#f44336", color: "white" }}
+          onPress={this.props.onLogin}
+        >
+          Login
+        </Button>
+        <Button style={{ backgroundColor: "#f44336", color: "white" }}>
+          Sign Up
+        </Button>
+      </div>
+    );
+
     return (
       <header style={styles.header}>
         <div style={styles.logo}>
@@ -20,14 +46,7 @@ export default class TopBar extends Component {
           {"Geeks of Kolachi"}
         </div>
         <div style={{ float: "left", color: "white", flex: 1 }} />
-        <div style={{ float: "right", paddingRight: 20 }}>
-          <Button style={{ backgroundColor: "#008CBA", color: "white" }}>
-            Login
-          </Button>
-          <Button style={{ backgroundColor: "#f44336", color: "white" }}>
-            Sign Up
-          </Button>
-        </div>
+        {this.props.isloggedin ? auth : guest}
       </header>
     );
   }

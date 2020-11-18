@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import Button from "./Button";
 export default class HomeContent extends Component {
   render() {
-    return (
-      <div>
-        <Button style={{ backgroundColor: "#337ab7", color: "white" }}>
-          Login
-        </Button>
-      </div>
+    const btn = (
+      <Button
+        onPress={this.props.onLogin}
+        style={{ backgroundColor: "#337ab7", color: "white" }}
+      >
+        Login
+      </Button>
     );
+    return <div>{this.props.isloggedin ? null : btn}</div>;
   }
 }

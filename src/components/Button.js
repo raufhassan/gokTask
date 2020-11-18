@@ -13,7 +13,10 @@ const styles = {
 export default class Button extends Component {
   render() {
     return (
-      <button style={{ ...styles.button, ...this.props.style }}>
+      <button
+        onClick={this.props.onPress}
+        style={{ ...styles.button, ...this.props.style }}
+      >
         {this.props.children}
       </button>
     );
