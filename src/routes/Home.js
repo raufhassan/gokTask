@@ -4,8 +4,6 @@ import HomeContent from "../components/HomeContent";
 import { Link } from "react-router-dom";
 
 export default class Home extends Component {
-  state = {};
-
   render() {
     return (
       <div className="App">
