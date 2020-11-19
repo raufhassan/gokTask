@@ -1,48 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+import { connect } from "react-redux";
+import { signUp } from "../redux/actions/authActions";
 
-export default class TopBar extends Component {
+class TopBar extends Component {
+  onLogin = () => {
+    this.props.signUp(true);
+  };
+  onLogout = () => {
+    this.props.signUp(false);
+  };
   render() {
-    const auth = (
-      <div
-        style={{
-          float: "right",
-          paddingRight: 20,
-        }}
-      >
-        <Button
-          style={{
-            backgroundColor: "#00578a",
-            color: "white",
-            // borderRadius: "100%",
-            // padding: "5",
-          }}
-        >
-          HR
-        </Button>
-        <Button
-          onPress={this.props.onLogout}
-          style={{ backgroundColor: "#f44336", color: "white" }}
-        >
-          Logout
-        </Button>
-      </div>
-    );
-    const guest = (
-      <div style={{ float: "right", paddingRight: 20 }}>
-        <Button
-          style={{ backgroundColor: "#00578a", color: "white" }}
-          onPress={this.props.onLogin}
-        >
-          Login
-        </Button>
-        <Button style={{ backgroundColor: "#f44336", color: "white" }}>
-          Sign Up
-        </Button>
-      </div>
-    );
-
     return (
       <header style={styles.header}>
         <div style={styles.logo}>
@@ -58,11 +27,29 @@ export default class TopBar extends Component {
           {"Geeks of Kolachi"}
         </div>
         <div style={{ float: "left", color: "white", flex: 1 }} />
-        {this.props.isloggedin ? auth : guest}
+        {this.props.auth.isAuthenticated ? (
+          <>
+            <div style={styles.userbox}>HR</div>
+            <Button onPress={this.onLogout} style={styles.btnRed}>
+              Logout
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button style={styles.btnBlue} onPress={this.onLogin}>
+              Login
+            </Button>
+            <Button style={styles.btnRed}>Sign Up</Button>
+          </>
+        )}
       </header>
     );
   }
 }
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { signUp })(TopBar);
 
 const styles = {
   logo: {
@@ -78,5 +65,29 @@ const styles = {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#e6d4a0",
+  },
+  userbox: {
+    border: 0,
+    margin: 8,
+    width: 50,
+    padding: 12,
+    fontSize: 12,
+    borderRadius: "100%",
+    color: "white",
+    backgroundColor: "#337ab7",
+    textAlign: "center",
+  },
+  btnBlock: {
+    float: "right",
+    paddingRight: 20,
+    display: "flex",
+  },
+  btnBlue: {
+    backgroundColor: "#337ab7",
+    color: "white",
+  },
+  btnRed: {
+    backgroundColor: "#f44336",
+    color: "white",
   },
 };

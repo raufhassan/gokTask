@@ -8,38 +8,20 @@ import TopBar from "./components/TopBar";
 import { Provider } from "react-redux";
 import store from "./store";
 class App extends Component {
-  state = {
-    isloggedin: false,
-  };
-  onLogin = () => {
-    // e.preventDefault();
-    this.setState({ isloggedin: true });
-  };
-  onLogout = () => {
-    this.setState({ isloggedin: false });
-  };
   render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            <TopBar
-              isloggedin={this.state.isloggedin}
-              onLogin={this.onLogin}
-              onLogout={this.onLogout}
-            />
+            <TopBar />
             <Switch>
               <Route exact path="/" component={Landing} />
+              <Route exact path="/home" component={Home} />
               <Route
-                path="/home"
-                component={() => (
-                  <Home
-                    isloggedin={this.state.isloggedin}
-                    onLogin={this.onLogin}
-                  />
-                )}
+                exact
+                path="/users"
+                render={(props) => <UserList {...props} />}
               />
-              <Route exact path="/users" component={UserList} />
               <Route exact path="/:userid" component={UserDetail} />
             </Switch>
           </div>

@@ -1,15 +1,27 @@
 import React, { Component } from "react";
 import Button from "./Button";
-export default class HomeContent extends Component {
+import { connect } from "react-redux";
+import { signUp } from "../redux/actions/authActions";
+class HomeContent extends Component {
+  onLogin = () => {
+    this.props.signUp(true);
+  };
   render() {
-    const btn = (
-      <Button
-        onPress={this.props.onLogin}
-        style={{ backgroundColor: "#337ab7", color: "white" }}
-      >
-        Login
-      </Button>
+    return (
+      <div>
+        {this.props.auth.isAuthenticated ? null : (
+          <Button
+            onPress={this.onLogin}
+            style={{ backgroundColor: "#337ab7", color: "white" }}
+          >
+            Login
+          </Button>
+        )}
+      </div>
     );
-    return <div>{this.props.isloggedin ? null : btn}</div>;
   }
 }
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { signUp })(HomeContent);

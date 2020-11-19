@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import Button from "../components/Button";
+import isEmpty from "../validate/is-empty";
 class UserDetail extends Component {
-  state = {};
-  componentDidMount() {}
   render() {
-    /* let id = this.props.match.params.userid;
-    console.log("id", id); */
-    let data = this.props.history.location.state;
-    if (data) {
+    let data = this.props.history.location.state.data;
+    if (!isEmpty(data)) {
       return (
         <div className="container p-5">
           <Button
@@ -19,22 +16,23 @@ class UserDetail extends Component {
           <div className="row">
             <div className="col-sm-6">
               <img
-                src={data.picture}
+                src={data?.picture?.large}
                 style={{ width: "100%", height: "100%" }}
+                alt={"profile pic"}
               />
             </div>
             <div className="col-sm-6">
               <div>
-                <h3>{data.fname}</h3>
-                <p>{data.email}</p>
-                <p>{data.phone}</p>
+                <h3>{data?.name?.first.concat(" ", data?.name?.last)}</h3>
+                <p>{data?.email}</p>
+                <p>{data?.phone}</p>
               </div>
             </div>
           </div>
         </div>
       );
     } else {
-      return <h3>Loading</h3>;
+      return <h3>no details</h3>;
     }
   }
 }
