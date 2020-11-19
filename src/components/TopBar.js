@@ -5,8 +5,20 @@ import Button from "./Button";
 export default class TopBar extends Component {
   render() {
     const auth = (
-      <div style={{ float: "right", paddingRight: 20 }}>
-        <Button style={{ backgroundColor: "#f44336", color: "white" }}>
+      <div
+        style={{
+          float: "right",
+          paddingRight: 20,
+        }}
+      >
+        <Button
+          style={{
+            backgroundColor: "#00578a",
+            color: "white",
+            // borderRadius: "100%",
+            // padding: "5",
+          }}
+        >
           HR
         </Button>
         <Button
@@ -20,7 +32,7 @@ export default class TopBar extends Component {
     const guest = (
       <div style={{ float: "right", paddingRight: 20 }}>
         <Button
-          style={{ backgroundColor: "#f44336", color: "white" }}
+          style={{ backgroundColor: "#00578a", color: "white" }}
           onPress={this.props.onLogin}
         >
           Login

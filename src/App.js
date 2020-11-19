@@ -5,6 +5,8 @@ import Home from "./routes/Home";
 import UserList from "./routes/UserList";
 import UserDetail from "./components/UserDetail";
 import TopBar from "./components/TopBar";
+import { Provider } from "react-redux";
+import store from "./store";
 class App extends Component {
   state = {
     isloggedin: false,
@@ -18,7 +20,7 @@ class App extends Component {
   };
   render() {
     return (
-      <div>
+      <Provider store={store}>
         <BrowserRouter>
           <div>
             <TopBar
@@ -42,7 +44,7 @@ class App extends Component {
             </Switch>
           </div>
         </BrowserRouter>
-      </div>
+      </Provider>
     );
   }
 }
