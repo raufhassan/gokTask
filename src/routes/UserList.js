@@ -19,7 +19,7 @@ class UserList extends Component {
         <div className="container">
           <h1 className="text-center my-5">Users list</h1>
           <div className="row">
-            {this.props.users.users.map((user, index) => (
+            {userArr.map((user, index) => (
               <div key={index} className="col-md-3">
                 <User data={user} history={this.props.history} />
               </div>
