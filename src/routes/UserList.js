@@ -1,32 +1,36 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component, Fragment } from "react";
 import User from "../components/User";
+import MyContext from "../MyContext";
+import Loading from "../components/Loading";
+import isEmpty from "../validate/is-empty";
 class UserList extends Component {
-  state = { users: [] };
-  componentDidMount() {
-    axios.get(`https://randomuser.me/api?results=20`).then((res) => {
-      const users = res.data;
-      this.setState({ users: users.results });
-    });
-  }
   render() {
-    console.log("user", this.state.users);
-    if (this.state.users) {
-      return (
-        <div className="container">
-          <h1 className="text-center my-5">Users list</h1>
-          <div className="row">
-            {this.state.users.map((user) => (
-              <div className="col-md-3">
-                <User data={user} history={this.props.history} />
+    return (
+      <MyContext.Consumer>
+        {(context) => {
+          if (context.isLoading) {
+            return <Loading />;
+          } else if (context.errors) {
+            return <h1>Error</h1>;
+          } else if (!isEmpty(context.users)) {
+            return (
+              <div className="container">
+                <h1 className="text-center my-5">Users list</h1>
+                <div className="row">
+                  {context.users.map((user, index) => (
+                    <div key={index} className="col-md-3">
+                      <User data={user} history={this.props.history} />
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      );
-    } else {
-      return <h5>Loading</h5>;
-    }
+            );
+          } else {
+            return <h1>no user</h1>;
+          }
+        }}
+      </MyContext.Consumer>
+    );
   }
 }
 
